@@ -3,11 +3,11 @@ const app=express()
 const bodyParser=require('body-parser') ;
 const userRoute=require('./Routes/userRoute');
 const sequelize = require('./utils/database');
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
-
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 
 app.use('/',userRoute);
 app.use('/user', userRoute);
