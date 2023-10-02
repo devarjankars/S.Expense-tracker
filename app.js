@@ -10,12 +10,12 @@ app.use(bodyParser.json());
 
 
 app.use('/',userRoute);
-app.use('/user', userRoute);
+
 
 
 sequelize.sync()
 .then(()=>{
-    app.listen(3000)
+    app.listen(3000);
 })
 .catch((err)=>{console.log(err);})
 

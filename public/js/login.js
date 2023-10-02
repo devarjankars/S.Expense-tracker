@@ -24,38 +24,30 @@
 // }
 // console.log("hello");
 
-// const emailbtn=document.getElementById('email').value;
-const pwd=document.getElementById('pwd').value;
-const signbtn=document.getElementById('signupbtn');
-const responsediv=document.getElementById('resdiv');
+const email=document.getElementById('email');
+const passWord=document.getElementById('passWord');
+// const signbtn=document.getElementById('signupbtn');
+// const responsediv=document.getElementById('resdiv');
+const loginbtn= document.getElementById('submitbtn');
 
-console.log("sds",pwd);
 
-console.log(pwd);
+function login (e){
 
-function loging(e){
-    e.preventDefault();
-   const email=e.target.email.value;
-   const pwd=e.target.pwd.value;
-   
     console.log("loginig");
     let loginObj={
-        email:email,
-        password:pwd.value,
+        email:e.target.email.value,
+        password:e.target.passWord.value,
     };
    console.log("here obj value",loginObj);
     axios.post('http://localhost:3000/user/login', loginObj)
     .then(result=>{
-        console.log(result);
+       alert(result.data);
 
-        responsediv.innerHTML +=`<span><p class="text-danger">${result.data.message}</p></span>`
+        responsediv.innerHTML +=`<span><p class="text-danger">${result.data.message}</p></span>`;
         console.log("end");
-   })
-   
-
-.catch(err=>{console.log(err)})
+   }).catch(err=>{console.log(err)})
 
 }
+
  
 
-//signbtn.addEventListener('click',signUp)

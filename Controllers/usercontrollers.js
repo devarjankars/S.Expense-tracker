@@ -1,6 +1,7 @@
 const path= require('path');
 const User=require('../Models/users');
 const sequelize=require('../utils/database');
+const bcrypt =require('bcrypt')
 const { log } = require('console');
 
 
@@ -18,20 +19,26 @@ exports.PostuserData= async(req, res, next )=>{
     const name=req.body.name;
     const email=req.body.email;
     const password=req.body.password;
-    const userObj={
-        name:name,
-        email:email,
-        password:password,
-    }
-     User.findOne({where:{email:email}})
+ 
+     User.findOne({where:{  email  }})
     .then((user)=>{
         if(user){
-            res.status(409).send(`<script>alert('User emailalready prsent!'); window.location.href='/'</script>`)
+            res.status(409).send(`<script>alert('User email already prsent!'); window.location.href='/'</script>`)
         }
         else{
-            User.create(userObj);
-            console.log("user created ");
-            res.status(200).redirect('/')
+            bcrypt.hash(password, 10 , async (err, hash)=>{
+              await User.create({
+                    name:name,
+                    email:email,
+                    password:hash
+                });
+                
+                console.log("user created ");
+                res.status(200).redirect('/')
+               
+            })
+        
+           
         }
     }).catch(err=>{
         console.log(err);
@@ -57,32 +64,29 @@ exports.getLoginPage= async (req, res, next)=>{
 
 exports.postloginData=async(req, res, next )=>{
     try{
-        const logmail=req.body.email;
-        const logpwd=req.body.password;
-        let loginObj={
-            email:logmail,
-            password:logpwd
-        };
+        const email=req.body.email;
+        const password=req.body.password;
         console.log("inside post data");
-        User.findOne({where:{email:logmail,}}).then(result=>{
-            if(result){
-                 console.log(result);
-                if(result.password===logpwd){
-                    return res
-                    .status(200)
-                    .json({ success: true, message: "valid user!" })
+    
+        User.findAll({where:{ email }}).then(user=>{
+            if(user.length > 0){
+                bcrypt.compare(password,user.password, (err,result)=>{
+                if(err){
+                    return res.status(500).json({sucess:false, message:"something went wrong"})
+                }
+                if(result===true){
+                    res.status(200).json({sucess:true, message:"sucessfully logged"});
                 }
                 else{
-                    return res.status(401) .json({ success: false, message: "Something went Wrong!" })
+                    res.status(401).json({sucess:false, message:"Wrong password"})
+    
                 }
+                })  
             }
             else{
-                return res
-              .status(404)
-              .json({ success: false, message: "User not Available signUP!" })
+                res.status(404).json({message:"User not found Please signUp"});
             }
-
-        }).catch(err=>{  console.log(err); })
+        })
 
 
     }catch(err){ console.log(err); }
