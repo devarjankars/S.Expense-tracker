@@ -2,7 +2,7 @@ const path= require('path');
 const User=require('../Models/users');
 const sequelize=require('../utils/database');
 const bcrypt =require('bcrypt')
-const { log } = require('console');
+
 
 
 
@@ -68,14 +68,16 @@ exports.postloginData=async(req, res, next )=>{
         const password=req.body.password;
         console.log("inside post data");
     
-        User.findAll({where:{ email }}).then(user=>{
-            if(user.length > 0){
+        User.findAll({where:{ email:email }}).then(user=>{
+            if(user){
+        
                 bcrypt.compare(password,user.password, (err,result)=>{
                 if(err){
                     return res.status(500).json({sucess:false, message:"something went wrong"})
                 }
                 if(result===true){
-                    res.status(200).json({sucess:true, message:"sucessfully logged"});
+                   
+                    res.redirect('/expense');
                 }
                 else{
                     res.status(401).json({sucess:false, message:"Wrong password"})

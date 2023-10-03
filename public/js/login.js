@@ -41,10 +41,9 @@ function login (e){
    console.log("here obj value",loginObj);
     axios.post('http://localhost:3000/user/login', loginObj)
     .then(result=>{
-       alert(result.data);
 
-        responsediv.innerHTML +=`<span><p class="text-danger">${result.data.message}</p></span>`;
-        console.log("end");
+
+        
    }).catch(err=>{console.log(err)})
 
 }

@@ -3,6 +3,7 @@ const app=express()
 const bodyParser=require('body-parser') ;
 const userRoute=require('./Routes/userRoute');
 const sequelize = require('./utils/database');
+const expenseRoute=require('./Routes/expenseRoute');
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -10,6 +11,8 @@ app.use(bodyParser.json());
 
 
 app.use('/',userRoute);
+
+app.use('/expense',expenseRoute)
 
 
 
