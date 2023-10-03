@@ -1,6 +1,7 @@
 const path= require('path');
 const Expense=require('../Models/expenseModel');
 const sequelize=require('../utils/database');
+const { log } = require('util');
 
 
 
@@ -26,7 +27,8 @@ exports.getAllexpense= async(req, res, next)=>{
 }
 exports.addExpense= async(req, res, next)=>{
     try{
-        const amount =req.body.amount;
+        console.log(req.body);
+        const amount =req.body.Amt;
        const discription=req.body.discription
        const expenseOn=req.body.expenseOn
        let expensObj={
@@ -34,6 +36,7 @@ exports.addExpense= async(req, res, next)=>{
         discription:discription,
         expenseOn:expenseOn,
        }
+       console.log(expensObj);
 await  Expense.create(expensObj);
   res.redirect('/expense');
         }

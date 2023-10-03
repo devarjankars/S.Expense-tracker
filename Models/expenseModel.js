@@ -7,7 +7,11 @@ const sequelize= require('../utils/database');
         autoIncrement: true,
         primaryKey: true
     },
-    amount:Sequelize.DOUBLE,
+    amount:{
+        type:Sequelize.DOUBLE,
+        allowNull:false,
+    }
+    ,
     discription:Sequelize.TEXT,
     expenseOn:Sequelize.STRING,
  });

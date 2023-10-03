@@ -11,41 +11,39 @@
     <h1 class="text-sm-center"> Welcome To Expense Tracker</h1>
     <div class="form-group">
         <form  action="/expense/addExpense" method="POST">
-            <p> Expense Amount $</p>
-            <input type="number" name="amount " id="amount " required>
+            <p>Expense Amount$</p>
+            <input type="number" name="Amt" id="Amt" required>
             <p>Discription</p>
             <textarea name="discription" id="discription" cols="25" rows="1" placeholder="discription" required></textarea><br>
             <p></p>
             <select class="form-select" aria-label="Default select example" name="expenseOn">
                 <option selected> Expense On</option>
-                <option value="1">Rent</option>
-                <option value="2">Food</option>
-                <option value="3">Education</option>
-                <option value="4">traveling</option>
-                <option value="5">Others</option>
+                <option value="Rent">Rent</option>
+                <option value="Food">Food</option>
+                <option value="Education">Education</option>
+                <option value="traveling">traveling</option>
+                <option value="Others">Others</option>
               </select>
+              <button type="submit">Submit</button>
         </form>
+        <br>
+        <br>
 
-        <div class="result">
-            <div>
+
+        <div class="result" id ="result">
+            <!-- -- <div>
                 <p>${expense.id}</p> 
                 <p>${expense.amount}</p>
                 <p>${expense.discription}</p>
                 <p>${expense.expenseOn}</p>
-                <span class="">
-                 <button class="btn-dark"> Edit</button>
-                 <button class="btn-danger">Delete</button>
-                </span>
+                <span class=""> -->
+                 
              </div>
 
         </div>
     </div>
 </body>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.2/axios.min.js"
-    integrity="sha512-QTnb9BQkG4fBYIt9JGvYmxPpd6TBeKp6lsUrtiVQsrJ9sb33Bn9s0wMQO9qVBFbPX3xHRAsBHvXlcsrnJjExjg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <script src="/js/expense.js"></script>
 </html>

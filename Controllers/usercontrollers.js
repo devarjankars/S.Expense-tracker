@@ -6,6 +6,7 @@ const bcrypt =require('bcrypt')
 
 
 
+
 exports.getSignPage= async (req, res, next)=>{
     try{
     res.sendFile(path.join(__dirname , "../", "public","views","signUp.html"));
@@ -34,7 +35,7 @@ exports.PostuserData= async(req, res, next )=>{
                 });
                 
                 console.log("user created ");
-                res.status(200).redirect('/')
+                res.redirect('/')
                
             })
         
@@ -64,25 +65,30 @@ exports.getLoginPage= async (req, res, next)=>{
 
 exports.postloginData=async(req, res, next )=>{
     try{
-        const email=req.body.email;
-        const password=req.body.password;
+        const mail=req.body.email;
+        const pass=req.body.password;
+        
         console.log("inside post data");
     
-        User.findAll({where:{ email:email }}).then(user=>{
+       await User.findAll({where:{ email:mail }}).then(user=>{
             if(user){
-        
-                bcrypt.compare(password,user.password, (err,result)=>{
+              console.log(user[0].password);
+                bcrypt.compare(pass, user[0].password, (err,response)=>{
+                    console.log(response);
                 if(err){
-                    return res.status(500).json({sucess:false, message:"something went wrong"})
+                    console.log("hello err1");
+                    return res.json({sucess:false, message:"something went wrong"})
                 }
-                if(result===true){
-                   
-                    res.redirect('/expense');
+                if(response){
+                    console.log("all good");
+                    res.json({sucess:true, message:"true"})
                 }
                 else{
-                    res.status(401).json({sucess:false, message:"Wrong password"})
+                    console.log("hello err2");
+                    res.json({sucess:false, message:"Wrong password"})
     
                 }
+                console.log("end");
                 })  
             }
             else{

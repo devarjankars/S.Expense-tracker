@@ -27,24 +27,36 @@
 const email=document.getElementById('email');
 const passWord=document.getElementById('passWord');
 // const signbtn=document.getElementById('signupbtn');
-// const responsediv=document.getElementById('resdiv');
+const responsediv=document.getElementById('resdiv');
 const loginbtn= document.getElementById('submitbtn');
 
 
-function login (e){
+async function login (e){
+    e.preventDefault();
 
-    console.log("loginig");
+   try{ console.log("loginig");
     let loginObj={
         email:e.target.email.value,
         password:e.target.passWord.value,
     };
    console.log("here obj value",loginObj);
-    axios.post('http://localhost:3000/user/login', loginObj)
-    .then(result=>{
-
-
+  axios
+  .post('http://localhost:3000/user/login',loginObj)
+  .then(result=>{
+    console.log("hiii");
+    location.reload();
+     alert(result.data.message);
+     if(result.data.message==="true"){
         
-   }).catch(err=>{console.log(err)})
+        window.location.href='/expense';}
+        else{
+            location.reload();
+            responsediv.innerHTML +=`<div> <p>${result.data.message}</p></div>`
+        }
+
+})
+}   
+   catch(err){console.log(err)}
 
 }
 

@@ -1,16 +1,19 @@
  
  const alldata=document.getElementById('result');
+
  let getAllexpense= async()=>{
    try{
-       let res=await axios.get(`http://localhost:3000/expense/allExpenses`)
-       res.data.forEach(element => {
-        showOn(element)
+       const res=await axios.get(`http://localhost:3000/expense/allExpense`)
+      // console.log(res.data);
+       res.data.forEach(ele => {
+        showOn(ele);
        });}
    catch(err){
     console.log(err);}}
 
  let showOn =(expense)=>{
-    alldata.innerHTML+=`<div>
+
+    alldata.innerHTML +=`<div>
     <p>${expense.id}</p> 
     <p>${expense.amount}</p>
     <p>${expense.discription}</p>
