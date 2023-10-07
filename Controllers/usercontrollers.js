@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 
 function getJwtToken(id) {
     console.log(id);
-    return jwt.sign(id, process.env.TOKEN_SECRET);
+    return jwt.sign(id, process.env.TOKEN);
   }
 
 
@@ -87,7 +87,7 @@ exports.postloginData=async(req, res, next )=>{
                 if(response){
                     console.log("all good");
                   console.log(user[0].id, user[0].email);
-                    res.status(500).json({sucess:true, message:"true", token:getJwtToken(user[0].id)})
+                    res.status(200).json({sucess:true, message:"true", token:getJwtToken(user[0].id)})
                 }
                 else{
                     console.log("hello err2");

@@ -3,7 +3,11 @@
 
  let getAllexpense= async()=>{
    try{
-       const res=await axios.get(`http://localhost:3000/expense/allExpense`)
+      const token=localStorage.getItem("token");
+       const res=await axios.get(`http://localhost:3000/expense/allExpense`,{ headers: {
+         Authorization : token
+         }
+       })
       // console.log(res.data);
        res.data.forEach(ele => {
         showOn(ele);
@@ -34,7 +38,11 @@
   let pEle= e.parentElement.parentElement;
   let id=pEle.children[0].innerHTML
   console.log(id)
-  axios.get(`http://localhost:3000/expense/deleteExpense/${id}`).then((k=>{
+  const token=localStorage.setItem('token')
+  axios.get(`http://localhost:3000/expense/deleteExpense/${id}`,{ headers: {
+   Authorization : token,
+   }
+ }).then((k=>{
    console.log(k);
    pEle.innerHTML=``;
    
@@ -44,6 +52,29 @@
   })
 
  }
+ let addExp=(e)=>{
+   e.preventDefault();
+   const expObj={
+ Amt:e.target.Amt.value,
+ discription:e.target.discription.value,
+expenseOn:e.target.expenseOn.value,
+   }
+ console.log(e);
+
+const token=localStorage.getItem('token')
+ axios.post(`http://localhost:3000/expense/addExpense`,expObj,{ headers: {
+   Authorization : token,
+   }
+ }).then((k=>{
+   console.log(k);
+   window.location.reload();
+   
+
+  })).catch(err=>{
+   console.log(err);
+  }) }
+
+ 
 
 
 

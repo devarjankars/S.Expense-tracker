@@ -2,6 +2,7 @@ const path= require('path');
 const Expense=require('../Models/expenseModel');
 const sequelize=require('../utils/database');
 const { log } = require('util');
+const { where } = require('sequelize');
 
 
 
@@ -16,7 +17,7 @@ exports.getPage= async(req, res, next)=>{
 }
 exports.getAllexpense= async(req, res, next)=>{
     try{
-       const expense= await Expense.findAll();
+       const expense= await Expense.findAll( {where:{userId:req.user.id}});
        res.json(expense);
        
         }
@@ -31,10 +32,12 @@ exports.addExpense= async(req, res, next)=>{
         const amount =req.body.Amt;
        const discription=req.body.discription
        const expenseOn=req.body.expenseOn
+       const userId=req.user.id;
        let expensObj={
         amount :amount,
         discription:discription,
         expenseOn:expenseOn,
+        userId:userId,
        }
        console.log(expensObj);
 await  Expense.create(expensObj);
