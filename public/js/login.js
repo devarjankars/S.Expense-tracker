@@ -42,19 +42,19 @@ async function login (e){
    console.log("here obj value",loginObj);
   axios
   .post('http://localhost:3000/user/login',loginObj)
-  .then(result=>{
-    console.log("hiii");
-    location.reload();
-     alert(result.data.message);
-     if(result.data.message==="true"){
-        
+  .then(logResult=>{
+   
+     if(logResult.data.message==="true"){
+        localStorage.setItem("token", logResult.data.token)
+        alert(logResult.data.message);
         window.location.href='/expense';}
         else{
+            alert(logResult.data.message);
             location.reload();
-            responsediv.innerHTML +=`<div> <p>${result.data.message}</p></div>`
+            responsediv.innerHTML +=`<div> <p>${logResult.data.message}</p></div>`
         }
 
-})
+}).catch(err=>{console.log(err);});
 }   
    catch(err){console.log(err)}
 

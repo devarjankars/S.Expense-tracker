@@ -45,3 +45,16 @@ await  Expense.create(expensObj);
         }
 
 }
+exports.delExp=async(req, res, next)=>{
+    try{
+    let id=req.params.id;
+  
+    await Expense.destroy({
+        where: { id: id}, });
+      res.redirect('/expense')
+
+    }catch(err){
+        console.log(err);
+    }
+
+}
