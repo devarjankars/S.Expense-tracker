@@ -5,19 +5,11 @@ const sequelize=require('../utils/database');
 exports.getLeraderBord=async(req,res,next)=>{
     try{
        
-        Expense.findAll({
-                attributes: [
-                  [sequelize.fn("sum", sequelize.col("amount")), "totalExpense"],
-                  [sequelize.col("user.name"), "name"],
-                ],
-                group: ["userId"],
-                include: [
-                  {
-                    model: User,
-                    attributes: [],
-                  },
-                ],
-                order: [[sequelize.fn("sum", sequelize.col("amount")), "DESC"]],
+        User.findAll( {attributes: [
+            [sequelize.col("name"), "name"],
+            [sequelize.col("totalExpenses"), "totalExpenses"],
+          ],
+          order: [[sequelize.col("totalExpenses"), "DESC"]],
               }).then(result=>{
         console.log(result);
         res.status(200).json(result)

@@ -41,7 +41,7 @@ Order.belongsTo(Users);
 
 
 //db all sync
-
+//{force:true}
 
 sequelize.sync()
 .then(()=>{

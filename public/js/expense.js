@@ -121,7 +121,7 @@ async function leaderbord (){
         //name"SANJAY"
 //totalExpense
       res.data.forEach(ele=>
-       premiumBtn.innerHTML +=`<div><p>${ele.name}__${ele.totalExpense}</div>`);
+       premiumBtn.innerHTML +=`<div><p>${ele.name}__${ele.totalExpenses}</div>`);
        console.log (res.data);
       }
     catch(err){

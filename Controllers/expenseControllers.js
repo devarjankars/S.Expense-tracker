@@ -3,6 +3,7 @@ const Expense=require('../Models/expenseModel');
 const sequelize=require('../utils/database');
 const { log } = require('util');
 const { where } = require('sequelize');
+const User= require('../Models/users');
 
 
 
@@ -39,8 +40,10 @@ exports.addExpense= async(req, res, next)=>{
         expenseOn:expenseOn,
         userId:userId,
        }
+       const totalExpenses=Number(req.user.totalExpenses) + Number(amount)
        console.log(expensObj);
 await  Expense.create(expensObj);
+await User.update({ totalExpenses:totalExpenses,} ,{where:{id:req.user.id}})
   res.redirect('/expense');
         }
         catch(err){
@@ -51,9 +54,16 @@ await  Expense.create(expensObj);
 exports.delExp=async(req, res, next)=>{
     try{
     let id=req.params.id;
-  
-    await Expense.destroy({
+    
+      
+
+   let Exp= await Expense.findByPk({
         where: { id: id}, });
+
+        await User.update({
+            totalExpenses:req.user.totalExpenses-Number(Exp.amount)
+        })
+        await Expense.destroy({where:{id:id, userId:req.user.userId}})
       res.redirect('/expense')
 
     }catch(err){
