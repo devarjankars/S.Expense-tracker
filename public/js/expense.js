@@ -1,5 +1,7 @@
  
  const alldata=document.getElementById('result');
+ const buyPremium=document.getElementById('buyPremium');
+
 
  let getAllexpense= async()=>{
    try{
@@ -8,7 +10,7 @@
          Authorization : token
          }
        })
-      // console.log(res.data);
+       console.log(res.data);
        res.data.forEach(ele => {
         showOn(ele);
        });}
@@ -29,6 +31,7 @@
 
  }
 
+
  let editExp=(e)=>{
 
  }
@@ -38,7 +41,7 @@
   let pEle= e.parentElement.parentElement;
   let id=pEle.children[0].innerHTML
   console.log(id)
-  const token=localStorage.setItem('token')
+  const token=localStorage.getItem('token')
   axios.get(`http://localhost:3000/expense/deleteExpense/${id}`,{ headers: {
    Authorization : token,
    }
@@ -97,24 +100,48 @@ let PremiumPurchase=async()=>{
         "Welcome to our Premium Membership, You have now access to Reports and LeaderBoard"
       );
       window.location.reload();
+      localStorage.setItem("token", res.data.token);
     }
   
   }
   const rzp1 = new Razorpay(option);
   rzp1.open();
   e.preventDefault();
-
-rzp1.on('payment.failed', function(response){
-console.log(response);
-alert(response);
-})
 }
 
+async function isPremiumUser() {
+  const token = localStorage.getItem("token");
+  const res = await axios.get("http://localhost:3000/user/isPremiumUser", {
+    headers: { Authorization: token },
+  })
+  console.log(res.data);
+  if (res.data.isPremiumUser) {
+    
+        buyPremium.innerHTML=`<p>Welcom Your premium User<p><br>
+        <div><Button class="btn btn-dark" onclick="Leaderbord()">LeaderBoard </Button></div>
+        `
+
+      }
+  
+}
+let Leaderbord=async()=>{
+  let getAllexpense= async()=>{
+    try{
+      // const token=localStorage.getItem("token");
+        const res=await axios.get(`http://localhost:3000/expense/allExpense`)
+        
+       // console.log(res.data);
+        res.data.forEach(ele => {
+         showOn(ele);
+        });}
+    catch(err){
+     console.log(err);}}
+}
 
  
 
-  const buyPremium=document.getElementById('buyPremium');
-  buyPremium.addEventListener('click', PremiumPurchase)
+ 
+buyPremium.addEventListener('click', PremiumPurchase)
 
-
-document.addEventListener('DOMContentLoaded',getAllexpense)
+document.addEventListener('DOMContentLoaded' ,isPremiumUser);
+document.addEventListener('DOMContentLoaded', getAllexpense)

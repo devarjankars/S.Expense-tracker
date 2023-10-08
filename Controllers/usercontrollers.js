@@ -5,12 +5,20 @@ const bcrypt =require('bcrypt')
 const jwt = require('jsonwebtoken');
 
 
-function getJwtToken(id) {
+function getJwtToken(id){
     console.log(id);
     return jwt.sign(id, process.env.TOKEN);
   }
 
-
+exports.getPremiumUser=(req,res,next)=>{
+    try {
+        if (req.user.isPremiumUser) {
+          return res.json({ isPremiumUser: true });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+}
 
 exports.getSignPage= async (req, res, next)=>{
     try{
@@ -105,3 +113,4 @@ exports.postloginData=async(req, res, next )=>{
 
     }catch(err){ console.log(err); }
 };
+
