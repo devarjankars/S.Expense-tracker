@@ -73,9 +73,43 @@ const token=localStorage.getItem('token')
   })).catch(err=>{
    console.log(err);
   }) }
+let PremiumPurchase=async()=>{
+  const token =localStorage.getItem('token');
+  const res = await axios.get(
+    "http://localhost:3000/purchase/premiumMembership",
+    { headers: { Authorization: token } }
+  );
+  var option={
+    key:res.data.key_id,
+    order_id:res.data.order.id,
+    handler: async function (response){
+      const res = await axios.post(
+        "http://localhost:3000/purchase/updateTransactionStatus",
+        {
+          order_id: options.order_id,
+          payment_id: response.razorpay_payment_id,
+        },
+        { headers: { Authorization: token } }
+      );
+      console.log(res);
+      alert(
+        "Welcome to our Premium Membership, You have now access to Reports and LeaderBoard"
+      );
+      window.location.reload();
+    }
+  
+  
+  }
+  const rzp1 = new Razorpay(options);
+  rzp1.open();
+  e.preventDefault();
+}
+
 
  
 
+  const buyPremium=document.getElementById('buyPremium');
+  buyPremium.addEventListener('click', PremiumPurchase)
 
 
 document.addEventListener('DOMContentLoaded',getAllexpense)
