@@ -8,7 +8,7 @@ const userRoute=require('./Routes/userRoute');
 const sequelize = require('./utils/database');
 const expenseRoute=require('./Routes/expenseRoute');
 const purchaseRoute=require('./Routes/purchase')
-
+const premiumRoute=require('./Routes/premiumRoute');
 //body parser and cors satic 
 const cors=require('cors');
 app.use(cors());
@@ -27,7 +27,7 @@ const Order=require('./Models/order');
 app.use('/',userRoute);
 app.use('/expense',expenseRoute);
 app.use('/purchase', purchaseRoute);
-
+app.use('/premium', premiumRoute);
 
 
 //Associations with Expense

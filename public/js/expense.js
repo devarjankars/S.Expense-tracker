@@ -1,7 +1,7 @@
  
  const alldata=document.getElementById('result');
  const buyPremium=document.getElementById('buyPremium');
-
+const premiumBtn=document.getElementById ('premium')
 
  let getAllexpense= async()=>{
    try{
@@ -109,6 +109,29 @@ let PremiumPurchase=async()=>{
   e.preventDefault();
 }
 
+async function leaderbord (){
+  
+    try{
+       const token=localStorage.getItem("token");
+        const res=await axios.get(`http://localhost:3000/Premium/leaderBord`,{
+          headers: { Authorization: token },
+        })
+        
+        console.log(res.data);
+        //name"SANJAY"
+//totalExpense
+      res.data.forEach(ele=>
+       premiumBtn.innerHTML +=`<div><p>${ele.name}__${ele.totalExpense}</div>`);
+       console.log (res.data);
+      }
+    catch(err){
+     console.log(err);}}
+
+
+
+
+
+
 async function isPremiumUser() {
   const token = localStorage.getItem("token");
   const res = await axios.get("http://localhost:3000/user/isPremiumUser", {
@@ -116,27 +139,15 @@ async function isPremiumUser() {
   })
   console.log(res.data);
   if (res.data.isPremiumUser) {
-    
-        buyPremium.innerHTML=`<p>Welcom Your premium User<p><br>
-        <div><Button class="btn btn-dark" onclick="Leaderbord()">LeaderBoard </Button></div>
+        buyPremium.style.visibility = 'hidden';
+        premiumBtn.innerHTML=`<div><p>Welcom Your premium User<p><br>
+        <Button type="submit" class="btn btn-dark" onclick="leaderbord(this)">LeaderBoard </Button></div>
         `
 
       }
   
 }
-let Leaderbord=async()=>{
-  let getAllexpense= async()=>{
-    try{
-      // const token=localStorage.getItem("token");
-        const res=await axios.get(`http://localhost:3000/expense/allExpense`)
-        
-       // console.log(res.data);
-        res.data.forEach(ele => {
-         showOn(ele);
-        });}
-    catch(err){
-     console.log(err);}}
-}
+
 
  
 
