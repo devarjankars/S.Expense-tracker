@@ -79,6 +79,7 @@ let PremiumPurchase=async()=>{
     "http://localhost:3000/purchase/premiumMembership",
     { headers: { Authorization: token } }
   );
+  console.log("go on");
   var option={
     key:res.data.key_id,
     order_id:res.data.order.id,
@@ -86,7 +87,7 @@ let PremiumPurchase=async()=>{
       const res = await axios.post(
         "http://localhost:3000/purchase/updateTransactionStatus",
         {
-          order_id: options.order_id,
+          order_id: option.order_id,
           payment_id: response.razorpay_payment_id,
         },
         { headers: { Authorization: token } }
@@ -98,11 +99,15 @@ let PremiumPurchase=async()=>{
       window.location.reload();
     }
   
-  
   }
-  const rzp1 = new Razorpay(options);
+  const rzp1 = new Razorpay(option);
   rzp1.open();
   e.preventDefault();
+
+rzp1.on('payment.failed', function(response){
+console.log(response);
+alert(response);
+})
 }
 
 
