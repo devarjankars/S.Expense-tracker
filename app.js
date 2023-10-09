@@ -14,11 +14,12 @@ const forgetPasswordRoute=require('./Routes/forgetPasswordRoute');
 const cors=require('cors');
 app.use(cors());
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 
 //databases
+const restPassword=require('./Models/restPassword')
 const Users=require('./Models/users');
 const Expense=require('./Models/expenseModel');
 const Order=require('./Models/order');
@@ -39,13 +40,15 @@ Expense.belongsTo(Users);
 //association order to user
 Users.hasMany(Order);
 Order.belongsTo(Users);
-
+//forgotpassword
+ restPassword.belongsTo(Users);
+ Users.hasMany(restPassword);
 
 /// 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 -api key
 //db all sync
 //{force:true}
 
-sequelize.sync({force:true})
+sequelize.sync()
 .then(()=>{
     app.listen(3000);
 })
