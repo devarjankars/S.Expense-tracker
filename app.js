@@ -9,6 +9,7 @@ const sequelize = require('./utils/database');
 const expenseRoute=require('./Routes/expenseRoute');
 const purchaseRoute=require('./Routes/purchase')
 const premiumRoute=require('./Routes/premiumRoute');
+const forgetPasswordRoute=require('./Routes/forgetPasswordRoute');
 //body parser and cors satic 
 const cors=require('cors');
 app.use(cors());
@@ -28,6 +29,7 @@ app.use('/',userRoute);
 app.use('/expense',expenseRoute);
 app.use('/purchase', purchaseRoute);
 app.use('/premium', premiumRoute);
+app.use('/password',forgetPasswordRoute);
 
 
 //Associations with Expense
@@ -39,11 +41,11 @@ Users.hasMany(Order);
 Order.belongsTo(Users);
 
 
-
+/// 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 -api key
 //db all sync
 //{force:true}
 
-sequelize.sync()
+sequelize.sync({force:true})
 .then(()=>{
     app.listen(3000);
 })
