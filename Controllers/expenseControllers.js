@@ -1,8 +1,6 @@
 const path= require('path');
 const Expense=require('../Models/expenseModel');
-const sequelize=require('../utils/database');
-const { log } = require('util');
-const { where } = require('sequelize');
+const sequelize=require('../utils/database');;
 const User= require('../Models/users');
 
 

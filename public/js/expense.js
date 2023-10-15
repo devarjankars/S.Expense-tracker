@@ -18,16 +18,26 @@ const dtrack=document.getElementById ('dlog')
         showOn(ele);
        })
        const pageig= document.getElementById('pageig')
-for (let index = 1; index < res.data.totalPages; index++) {
-  pageig.innerHTML +=`<li><button onclick="pageign(this)" >${index}</button> </li>
-  <button onclick="pageign(this)">${index+1}</button>`;
-}
+for (let index = 1; index <= res.data.totalPages; index++) {
+  const li = document.createElement("li");
+      const a = document.createElement("a");
+      li.setAttribute("class", "page-item");
+      a.setAttribute("class", "page-link");
+      a.setAttribute("href", "#");
+      a.appendChild(document.createTextNode(index));
+      li.appendChild(a);
+      pageig.appendChild(li);
+      a.addEventListener("click", pageign);
+    }
+  
+
        downlodH();
        ;}
    catch(err){
     console.log(err);}}
 
  let showOn =(expense)=>{
+ 
 
     alldata.innerHTML +=`<div class ="col-xs-12 col-md-8">
     <p>${expense.id}</p><div>${expense.amount}</div> <div>${expense.discription}</div>
@@ -48,18 +58,24 @@ for (let index = 1; index < res.data.totalPages; index++) {
 
  
  async function pageign(e){
-  const pageno=e.innerHTML-1;
+  try{
+  const pageno=e.target.textContent;
   console.log(pageno);
   const token = localStorage.getItem("token");
   const res = await axios.get(
-    `http://localhost:3000/expense/allExpenses/${pageno}`,
+    `http://localhost:3000/expense/allExpense/${pageno}`,
     { headers: { Authorization: token } }
   );
-  console.log(res.data.expense);
-       res.data.forEach(ele => {
+  console.log(res.data.expenses);
+  alldata.innerHTML="";
+       res.data.expenses.forEach(ele => {
+        
         showOn(ele);
        })
-
+      }
+      catch(err){
+        console.log(err);
+      }
  }
 
 
