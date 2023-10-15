@@ -10,6 +10,7 @@ const expenseRoute=require('./Routes/expenseRoute');
 const purchaseRoute=require('./Routes/purchase')
 const premiumRoute=require('./Routes/premiumRoute');
 const forgetPasswordRoute=require('./Routes/forgetPasswordRoute');
+reportsRoute=require('./Routes/reportRoute');
 //body parser and cors satic 
 const cors=require('cors');
 app.use(cors());
@@ -19,10 +20,12 @@ app.use(bodyParser.json());
 
 
 //databases
+const downloadFiles=require('./Models/downloadFiles');
 const restPassword=require('./Models/restPassword')
 const Users=require('./Models/users');
 const Expense=require('./Models/expenseModel');
 const Order=require('./Models/order');
+const user = require('./Models/users');
 
 
 //Routes
@@ -31,6 +34,7 @@ app.use('/expense',expenseRoute);
 app.use('/purchase', purchaseRoute);
 app.use('/premium', premiumRoute);
 app.use('/password',forgetPasswordRoute);
+
 
 
 //Associations with Expense
@@ -43,6 +47,16 @@ Order.belongsTo(Users);
 //forgotpassword
  restPassword.belongsTo(Users);
  Users.hasMany(restPassword);
+//download track
+Users.hasMany(downloadFiles);
+downloadFiles.belongsTo(Users);
+
+ //report
+
+
+ app.use("/reports", reportsRoute);
+ //
+ 
 
 /// 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 -api key
 //db all sync

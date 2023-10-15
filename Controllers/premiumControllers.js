@@ -1,5 +1,4 @@
 const User=require('../Models/users');
-const Expense=require('../Models/expenseModel');
 const sequelize=require('../utils/database');
 
 exports.getLeraderBord=async(req,res,next)=>{
