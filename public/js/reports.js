@@ -45,10 +45,10 @@ async function getDailyReport(e) {
       th.appendChild(document.createTextNode(expense.date));
 
       const td1 = document.createElement("td");
-      td1.appendChild(document.createTextNode(expense.category));
+      td1.appendChild(document.createTextNode(expense.expenseOn));
 
       const td2 = document.createElement("td");
-      td2.appendChild(document.createTextNode(expense.description));
+      td2.appendChild(document.createTextNode(expense.discription));
 
       const td3 = document.createElement("td");
       td3.appendChild(document.createTextNode(expense.amount));
@@ -115,10 +115,10 @@ async function getMonthlyReport(e) {
       th.appendChild(document.createTextNode(expense.date));
 
       const td1 = document.createElement("td");
-      td1.appendChild(document.createTextNode(expense.category));
+      td1.appendChild(document.createTextNode(expense.expenseOn));
 
       const td2 = document.createElement("td");
-      td2.appendChild(document.createTextNode(expense.description));
+      td2.appendChild(document.createTextNode(expense.discription));
 
       const td3 = document.createElement("td");
       td3.appendChild(document.createTextNode(expense.amount));

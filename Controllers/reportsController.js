@@ -11,6 +11,7 @@ exports.getReportsPage = (req, res, next) => {
 exports.dailyReports = async (req, res, next) => {
   try {
     const date = req.body.date;
+    console.log(date);
     const expenses = await Expense.findAll({
       where: { date: date, userId: req.user.id },
     });
@@ -23,7 +24,7 @@ exports.dailyReports = async (req, res, next) => {
 exports.monthlyReports = async (req, res, next) => {
   try {
     const month = req.body.month;
-
+   console.log(month);
     const expenses = await Expense.findAll({
       where: {
         date: {

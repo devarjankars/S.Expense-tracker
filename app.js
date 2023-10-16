@@ -2,7 +2,10 @@ require('dotenv').config();
 const express= require('express');
 const app=express()
 const bodyParser=require('body-parser') ;
-
+const helmet=require('helmet');
+//const compression=require('compression')
+const morgan=require('morgan')
+const  fs=require('fs');
 //routes
 const userRoute=require('./Routes/userRoute');
 const sequelize = require('./utils/database');
@@ -26,6 +29,7 @@ const Users=require('./Models/users');
 const Expense=require('./Models/expenseModel');
 const Order=require('./Models/order');
 const user = require('./Models/users');
+const path = require('path');
 
 
 //Routes
@@ -34,9 +38,12 @@ app.use('/expense',expenseRoute);
 app.use('/purchase', purchaseRoute);
 app.use('/premium', premiumRoute);
 app.use('/password',forgetPasswordRoute);
+app.use("/reports", reportsRoute);
 
-
-
+const accesslogstream=fs.createWriteStream(path.join(__dirname,"access.log"),{flags:'a'})
+app.use(helmet());
+//app.use(compression());
+app.use(morgan('combined',{stream:accesslogstream}));
 //Associations with Expense
 Users.hasMany(Expense);
 Expense.belongsTo(Users);
@@ -54,7 +61,6 @@ downloadFiles.belongsTo(Users);
  //report
 
 
- app.use("/reports", reportsRoute);
  //
  
 
@@ -64,7 +70,7 @@ downloadFiles.belongsTo(Users);
 
 sequelize.sync()
 .then(()=>{
-    app.listen(3000);
+    app.listen(process.env.PORT ||3000);
 })
 .catch((err)=>{console.log(err);})
 

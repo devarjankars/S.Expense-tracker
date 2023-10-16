@@ -39,9 +39,9 @@ for (let index = 1; index <= res.data.totalPages; index++) {
  let showOn =(expense)=>{
  
 
-    alldata.innerHTML +=`<div class ="col-xs-12 col-md-8">
-    <p>${expense.id}</p><div>${expense.amount}</div> <div>${expense.discription}</div>
-    <p>${expense.expenseOn}</p>
+    alldata.innerHTML +=`<div  class="card" style="width: 10rem;">
+    <p class="card-text">${expense.id}</p><p>${expense.amount}</p> <p class="card-text">${expense.discription}</p>
+    <p class="card-text">${expense.expenseOn}</p>
 
     <span class="">
      <button class="btn-dark"  onclick="editExp(this)" > Edit</button>
@@ -105,7 +105,19 @@ for (let index = 1; index <= res.data.totalPages; index++) {
  }
  let addExp=(e)=>{
    e.preventDefault();
+   const currentDate = new Date();
+   const day = currentDate.getDate();
+   const month = currentDate.getMonth() + 1;
+   const year = currentDate.getFullYear();
+
+   // add leading zeros to day and month if needed
+   const formattedDay = day < 10 ? `0${day}` : day;
+   const formattedMonth = month < 10 ? `0${month}` : month;
+
+   // create the date string in date-month-year format
+   const dateStr = `${formattedDay}-${formattedMonth}-${year}`;
    const expObj={
+  date:dateStr,
  Amt:e.target.Amt.value,
  discription:e.target.discription.value,
 expenseOn:e.target.expenseOn.value,
@@ -165,12 +177,11 @@ async function leaderbord (){
           headers: { Authorization: token },
         })
         
-        console.log(res.data);
+        console.log(res);
         //name"SANJAY"
 //totalExpense
       res.data.forEach(ele=>
-       premiumBtn.innerHTML +=``
-       `<div><p>${ele.name}__${ele.totalExpenses}</div>`);
+       premiumBtn.innerHTML +=`<div><p>${ele.name}__${ele.totalExpenses}</div>`);
        console.log (res.data);
       }
     catch(err){
@@ -189,7 +200,9 @@ async function isPremiumUser() {
   console.log(res.data);
   if (res.data.isPremiumUser) {
         buyPremium.style.visibility = 'hidden';
+    
         premiumBtn.innerHTML=`<div><p>Welcom Your premium User<p><br>
+        <a href="http://localhost:3000/reports/getReportsPage">Visit Report !</a>
         <Button type="submit" class="btn btn-dark" onclick="leaderbord(this)">LeaderBoard </Button></div>
 
         `

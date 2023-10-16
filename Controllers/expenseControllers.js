@@ -48,6 +48,7 @@ exports.addExpense= async(req, res, next)=>{
     const t = await sequelize.transaction();
     try{
         console.log(req.body);
+        const date=req.body.date;
         const amount =req.body.Amt;
        const discription=req.body.discription
        const expenseOn=req.body.expenseOn
@@ -56,7 +57,9 @@ exports.addExpense= async(req, res, next)=>{
         amount :amount,
         discription:discription,
         expenseOn:expenseOn,
+        date:date,
         userId:userId,
+
         
        }
        const totalExpenses=Number(req.user.totalExpenses) + Number(amount)
