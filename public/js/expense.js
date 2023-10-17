@@ -9,7 +9,7 @@ const dtrack=document.getElementById ('dlog')
  let getAllexpense= async()=>{
    try{
       const token=localStorage.getItem("token");
-       const res=await axios.get(`http://localhost:3000/expense/allExpense/1`,{ headers: {
+       const res=await axios.get(`http://13.232.55.174:3000/expense/allExpense/1`,{ headers: {
          Authorization : token
          }
        })
@@ -63,7 +63,7 @@ for (let index = 1; index <= res.data.totalPages; index++) {
   console.log(pageno);
   const token = localStorage.getItem("token");
   const res = await axios.get(
-    `http://localhost:3000/expense/allExpense/${pageno}`,
+    `http://13.232.55.174:3000/expense/allExpense/${pageno}`,
     { headers: { Authorization: token } }
   );
   console.log(res.data.expenses);
@@ -90,7 +90,7 @@ for (let index = 1; index <= res.data.totalPages; index++) {
   let id=pEle.children[0].innerHTML
   console.log(id)
   const token=localStorage.getItem('token')
-  axios.get(`http://localhost:3000/expense/deleteExpense/${id}`,{ headers: {
+  axios.get(`http://13.232.55.174:3000/expense/deleteExpense/${id}`,{ headers: {
    Authorization : token,
    }
  }).then((k=>{
@@ -125,7 +125,7 @@ expenseOn:e.target.expenseOn.value,
  console.log(e);
 
 const token=localStorage.getItem('token')
- axios.post(`http://localhost:3000/expense/addExpense`,expObj,{ headers: {
+ axios.post(`:3000/expense/addExpense`,expObj,{ headers: {
    Authorization : token,
    }
  }).then((k=>{
@@ -139,7 +139,7 @@ const token=localStorage.getItem('token')
 let PremiumPurchase=async()=>{
   const token =localStorage.getItem('token');
   const res = await axios.get(
-    "http://localhost:3000/purchase/premiumMembership",
+    "http://13.232.55.174:3000/purchase/premiumMembership",
     { headers: { Authorization: token } }
   );
   console.log("go on");
@@ -148,7 +148,7 @@ let PremiumPurchase=async()=>{
     order_id:res.data.order.id,
     handler: async function (response){
       const res = await axios.post(
-        "http://localhost:3000/purchase/updateTransactionStatus",
+        "http://13.232.55.174:3000/purchase/updateTransactionStatus",
         {
           order_id: option.order_id,
           payment_id: response.razorpay_payment_id,
@@ -173,7 +173,7 @@ async function leaderbord (){
   
     try{
        const token=localStorage.getItem("token");
-        const res=await axios.get(`http://localhost:3000/Premium/leaderBord`,{
+        const res=await axios.get(`http://13.232.55.174:3000/Premium/leaderBord`,{
           headers: { Authorization: token },
         })
         
@@ -194,7 +194,7 @@ async function leaderbord (){
 
 async function isPremiumUser() {
   const token = localStorage.getItem("token");
-  const res = await axios.get("http://localhost:3000/user/isPremiumUser", {
+  const res = await axios.get("http://13.232.55.174:3000/user/isPremiumUser", {
     headers: { Authorization: token },
   })
   console.log(res.data);
@@ -202,7 +202,7 @@ async function isPremiumUser() {
         buyPremium.style.visibility = 'hidden';
     
         premiumBtn.innerHTML=`<div><p>Welcom Your premium User<p><br>
-        <a href="http://localhost:3000/reports/getReportsPage">Visit Report !</a>
+        <a href="http://13.232.55.174:3000/reports/getReportsPage">Visit Report !</a>
         <Button type="submit" class="btn btn-dark" onclick="leaderbord(this)">LeaderBoard </Button></div>
 
         `
@@ -214,7 +214,7 @@ async function dFile (){
 
   try{
     const token=localStorage.getItem("token");
-    const  res=await axios.get(`http://localhost:3000/expense/download`, {
+    const  res=await axios.get(`http://13.232.55.174:3000/expense/download`, {
       headers: { Authorization: token },
     })
   if(res.status===200){
@@ -239,7 +239,7 @@ async function dFile (){
   async function downlodH(){
   try{
     const token=localStorage.getItem("token");
-  const  result=await axios.get(`http://localhost:3000/expense/allDfile`, {
+  const  result=await axios.get(`http://13.232.55.174:3000/expense/allDfile`, {
       headers: { Authorization: token },
     }) 
     console.log(result);

@@ -41,7 +41,7 @@ async function login (e){
     };
    console.log("here obj value",loginObj);
   axios
-  .post('http://localhost:3000/user/login',loginObj)
+  .post('http://13.232.55.174:3000/user/login',loginObj)
   .then(logResult=>{
    
      if(logResult.data.message==="true"){
